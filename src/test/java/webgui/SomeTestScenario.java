@@ -5,7 +5,15 @@ package webgui;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,7 +34,27 @@ class SomeTestScenario {
          * Kliknij pierwszy element listy
          */
 
+        driver.get("https://www.selenium.dev/documentation/");
 
+
+        Wait<ChromeDriver> fluentWait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(5))
+                .pollingEvery(Duration.ofMillis(200))
+                .ignoring(
+                        ElementNotInteractableException.class,
+                        ElementClickInterceptedException.class
+                );
+
+        By kotlinTab = By.cssSelector("#tabs-03-05-tab");
+
+        fluentWait.until(d -> {
+            d.findElement(kotlinTab).click();
+            return true;
+        });
+
+        "debug".toString();
+
+        driver.quit();
     }
 
 }

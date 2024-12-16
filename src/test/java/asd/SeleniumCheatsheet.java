@@ -4,12 +4,18 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.List;
 
 public class SeleniumCheatsheet {
@@ -150,6 +156,22 @@ public class SeleniumCheatsheet {
 
 //        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
 
+        //// Explicit wait
+        /// WebDriverWait
+        Wait<WebDriver> webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        webDriverWait.until(d -> webElement.isDisplayed());
+
+        /// FluentWait
+        Wait<ChromeDriver> fluentWait = new FluentWait<>(driver)
+                        .withTimeout(Duration.ofSeconds(2))
+                        .pollingEvery(Duration.ofMillis(300))
+                        .ignoring(ElementNotInteractableException.class);
+
+        fluentWait.until(
+                d -> {
+                    webElement.sendKeys("Displayed");
+                    return true;
+                });
     }
 
 }
