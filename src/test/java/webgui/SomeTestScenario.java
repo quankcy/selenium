@@ -34,27 +34,8 @@ class SomeTestScenario {
          * Kliknij pierwszy element listy
          */
 
-        driver.get("https://www.selenium.dev/documentation/");
 
 
-        Wait<ChromeDriver> fluentWait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(5))
-                .pollingEvery(Duration.ofMillis(200))
-                .ignoring(
-                        ElementNotInteractableException.class,
-                        ElementClickInterceptedException.class
-                );
-
-        By kotlinTab = By.cssSelector("#tabs-03-05-tab");
-
-        fluentWait.until(d -> {
-            d.findElement(kotlinTab).click();
-            return true;
-        });
-
-        "debug".toString();
-
-        driver.quit();
     }
 
 }
